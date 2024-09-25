@@ -1,0 +1,11 @@
+$header-height: 50px;
+.header {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+  width: 100%;
+}
+.content {
+  padding-top: $header-height;
+}
