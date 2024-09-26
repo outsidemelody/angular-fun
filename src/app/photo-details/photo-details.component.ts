@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {MatButton} from "@angular/material/button";
 import {PhotosService} from "../photos.service";
 import {ImageData} from "../types";
+import {FavoritesService} from "../favorites.service";
 
 @Component({
   selector: 'app-photo-details',
@@ -15,7 +16,12 @@ import {ImageData} from "../types";
 export class PhotoDetailsComponent {
   protected readonly image = signal<ImageData>(null);
 
-  constructor(private router: Router, private route: ActivatedRoute, private photos: PhotosService) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private photos: PhotosService,
+    private favorites: FavoritesService
+  ) { }
 
   ngOnInit() {
     const imgId = this.route.snapshot.paramMap.get('id') ?? '';
@@ -25,7 +31,7 @@ export class PhotoDetailsComponent {
   }
 
   removeFavorite() {
-    this.photos.removeFavorite(this.image()?.id);
+    this.favorites.removeFavorite(this.image()?.id);
     this.router.navigate(['/favorites'])
   }
 }

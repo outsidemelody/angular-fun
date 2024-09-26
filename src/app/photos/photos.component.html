@@ -1,11 +1,12 @@
-@for (img of images(); track img) {
-  @defer (on viewport) {
+@for (img of photos.imagesCache(); track img) {
+  @defer (on viewport(end)) {
     <app-photo-card mat-card-image [img]="img" (loaded)="loaded($event)" (onClick)="addToFavorites($event)">
-      @if (photos.isFavorite(img?.id)) {
+      @if (favorites.isFavorite(img?.id)) {
         <mat-icon class="mat-icon-rtl-mirror fav-icon" fontIcon="favorite" color="primary"></mat-icon>
       }
     </app-photo-card>
   } @placeholder {
-    <div>loading...</div>
+    <div></div>
   }
 }
+<div #end>Loading...</div>

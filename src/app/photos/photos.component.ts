@@ -4,6 +4,7 @@ import { MatCard, MatCardImage } from "@angular/material/card";
 import { PhotoCardComponent } from "../photo-card/photo-card.component";
 import {MatIcon} from "@angular/material/icon";
 import {ImageData} from "../types";
+import {FavoritesService} from "../favorites.service";
 
 @Component({
   selector: 'app-photos',
@@ -14,27 +15,21 @@ import {ImageData} from "../types";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PhotosComponent {
-  protected readonly images = signal<ImageData[]>([]);
-
-  constructor(protected photos: PhotosService) {
+  constructor(protected photos: PhotosService, protected favorites: FavoritesService) {
     this.loadImages();
   }
 
   private loadImages() {
-    this.photos.loadRandomImages().subscribe(images => {
-      this.images.update(prev => {
-        return [...prev, ...images];
-      });
-    });
+    this.photos.loadRandomImages().subscribe();
   }
 
   loaded(id: string) {
-    if (this.images().at(-2)?.id === id) {
+    if (this.photos.imagesCache().at(-2)?.id === id) {
       this.loadImages();
     }
   }
 
   addToFavorites(id: string) {
-    this.photos.addFavorite(id);
+    this.favorites.addFavorite(id);
   }
 }

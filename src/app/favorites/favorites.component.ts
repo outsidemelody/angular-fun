@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
-import {PhotosService} from "../photos.service";
 import {MatCardImage} from "@angular/material/card";
 import {PhotoCardComponent} from "../photo-card/photo-card.component";
 import {ImageData} from "../types";
 import {Router} from "@angular/router";
+import {FavoritesService} from "../favorites.service";
 
 @Component({
   selector: 'app-favorites',
@@ -19,10 +19,10 @@ import {Router} from "@angular/router";
 export class FavoritesComponent {
   protected readonly images = signal<ImageData[]>([]);
 
-  constructor(protected photos: PhotosService, private router: Router) { }
+  constructor(private router: Router, private favorites: FavoritesService) { }
 
   ngOnInit() {
-    this.photos.loadFavorites().subscribe((images) => {
+    this.favorites.loadFavorites().subscribe((images) => {
       this.images.update(() => images);
     })
   }
