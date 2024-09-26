@@ -1,1 +1,3 @@
-<p>favorites works!</p>
+@for (img of images(); track img) {
+  <app-photo-card mat-card-image [img]="img" (onClick)="goToPhoto($event)"></app-photo-card>
+}

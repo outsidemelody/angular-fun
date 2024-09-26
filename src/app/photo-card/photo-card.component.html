@@ -1,4 +1,4 @@
 <mat-card class="photo-card" (click)="clicked()">
-  <img mat-card-image [src]="img">
+  <img mat-card-image [src]="img?.src" alt="Image not found">
   <ng-content></ng-content>
 </mat-card>
